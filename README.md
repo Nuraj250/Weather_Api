@@ -43,8 +43,8 @@ Here are some example requests:
   - Request Body (in JSON format):
     ```json
     {
-      "email": "user@example.com",
-      "location": "New York"
+      "email": "--add user email--",
+      "location": "--add user city--"
     }
     ```
 
@@ -54,7 +54,7 @@ Here are some example requests:
   - Request Body (in JSON format):
     ```json
     {
-      "location": "Los Angeles"
+      "location": "-new City for update--"
     }
     ```
 
