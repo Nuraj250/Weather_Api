@@ -6,13 +6,15 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    location: String,
+    location: {
+        type: String,
+        required: true,
+    },
     weatherData: [
         {
-            date: Date,
+            date: { type: Date, default: Date.now },
             temperature: Number,
-            // Add other weather data fields here
-        },
+            humidity: Number,        },
     ],
 });
 

@@ -1,10 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const userRoutes = require('./routes/user'); // Import your user routes
+const userRoutes = require('./routes/Api'); // Import your user routes
 const cors = require('cors');
+const nodemailer = require('nodemailer');
 const app = express();
-app.use('/api/users', userRoutes);
 
 
 // Load environment variables
@@ -14,11 +13,22 @@ console.log(process.env.MONGODB_URI);
 // Middleware
 app.use(express.json())
 app.use(cors());
+app.use('/api/users', userRoutes);
+
 
 // Connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/weather?connectTimeoutMS=5000', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+});
+
+// Create a Nodemailer transporter
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+    },
 });
 
 mongoose.connection.on('connected', () => {
@@ -28,9 +38,6 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on('error', (err) => {
     console.error('MongoDB connection error:', err);
 });
-
-// Define routes and controllers (to be created later)
-// app.use('/api/users', userRoutes);
 
 // Start the server
 const port = process.env.PORT || 3000;
