@@ -1,18 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const userRoutes = require('./routes/user'); // Import your user routes
 const cors = require('cors');
 const app = express();
+app.use('/api/users', userRoutes);
+
 
 // Load environment variables
 require('dotenv').config();
+console.log(process.env.MONGODB_URI);
 
 // Middleware
-app.use(bodyParser.json());
+app.use(express.json())
 app.use(cors());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect('mongodb://127.0.0.1:27017/weather?connectTimeoutMS=5000', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });

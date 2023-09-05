@@ -6,6 +6,9 @@ const User = require('../models/user');
 // Create a new user
 router.post('/register', async (req, res) => {
     try {
+        if (!req.body || !req.body.email || !req.body.location) {
+            return res.status(400).json({ error: 'Invalid request body' });
+        }
         const { email, location } = req.body;
         const user = new User({ email, location });
         await user.save();
